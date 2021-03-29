@@ -1,0 +1,56 @@
+{
+  "name": "rpc-ui",
+  "version": "1.0.0",
+  "homepage": "./",
+  "main": "electron.js",
+  "license": "MIT",
+  "scripts": {
+    "react-start": "parcel -p 3000 index.html --out-dir build",
+    "react-build": "parcel build index.html --out-dir build --public-url ./",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron . \"",
+    "electron-build": "electron-builder -mwl",
+    "build": "yarn clean-build && yarn react-build && yarn electron-build"
+  },
+  "build": {
+    "appId": "com.dennisokeeffe",
+    "files": [
+      "src/electron.js",
+      "src/assets/*",
+      "build/**/*"
+    ],
+    "mac": {
+      "target": "dmg",
+      "icon": "src/assets/logo.png"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/logo.png"
+    },
+    "linux": {
+      "target": "deb",
+      "icon": "src/assets/logo.png",
+      "category": "Development"
+    }
+  },
+  "dependencies": {
+    "electron-is-dev": "^2.0.0",
+    "node-toolbox": "github:holidayextras/node-toolbox",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "concurrently": "^6.0.0",
+    "cross-env": "^7.0.3",
+    "electron": "^12.0.2",
+    "electron-builder": "^22.10.5",
+    "electron-rebuild": "^2.3.5",
+    "parcel-bundler": "^1.12.5",
+    "typescript": "^4.2.3",
+    "wait-on": "^5.3.0"
+  }
+}
