@@ -1,18 +1,27 @@
 const electron = require("electron")
+const child_process = require('child_process')
+const { rpc } = require('node-toolbox')
+const path = require("path")
+
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
-const ipcMain = electron.ipcMain
-const { rpc } = require('node-toolbox')
-
-const path = require("path")
-const isDev = require("electron-is-dev")
+const {ipcMain } = electron
 
 let mainWindow
 
 function eventHandler() {
-  ipcMain.on('toMain', (event, arguments) => {
-    const { service, functionName, environment, data } = arguments
-
+  ipcMain.on('rpcRequest', (_, arguments) => {
+    const { service, fn, environment, data } = arguments
+    rpc.request({
+      service,
+      func: fn,
+      data: JSON.parse(data),
+      environment
+    }, (err, result) => {
+      console.log(err, result)
+      if (err) return mainWindow.webContents.send('rpcError', err)
+      mainWindow.webContents.send('rpcResponse', result)
+    })
   })
 }
 
@@ -22,17 +31,13 @@ function createWindow() {
     height: 680,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: false,
+      nodeIntegration: true,
       enableRemoteModule: false,
       contextIsolation: true
     }
   })
 
-  mainWindow.loadURL(
-    isDev
-      ? "http://localhost:3000"
-      : `file://${path.join(__dirname, "../build/index.html")}`
-  )
+  mainWindow.loadFile('index.html')
   mainWindow.on("closed", () => (mainWindow = null))
 }
 
