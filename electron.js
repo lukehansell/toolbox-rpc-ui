@@ -1,5 +1,4 @@
 const electron = require("electron")
-const child_process = require('child_process')
 const { rpc } = require('node-toolbox')
 const path = require("path")
 
@@ -18,7 +17,6 @@ function eventHandler() {
       data: JSON.parse(data),
       environment
     }, (err, result) => {
-      console.log(err, result)
       if (err) return mainWindow.webContents.send('rpcError', err)
       mainWindow.webContents.send('rpcResponse', result)
     })
@@ -30,14 +28,14 @@ function createWindow() {
     width: 900,
     height: 680,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'src/preload.js'),
       nodeIntegration: true,
       enableRemoteModule: false,
       contextIsolation: true
     }
   })
 
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('src/index.html')
   mainWindow.on("closed", () => (mainWindow = null))
 }
 

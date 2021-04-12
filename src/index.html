@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Dockyard RPC UI</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+</head>
+
+<body>
+  <div>
+    <form onsubmit="return handleSubmit(event)" class="col-sm-12">
+      <div class="row responsive-label">
+        <div class="col-sm-12 col-md-3">
+          <label for="service">
+            Service Name
+          </label>
+        </div>
+        <div class="col-sm-12 col-md">
+          <input name="service-name" id="service" style="width: 85%;" />
+        </div>
+      </div>
+      <div class="row responsive-label">
+        <div class="col-sm-12 col-md-3">
+          <label for="environment">
+            Environment
+          </label>
+        </div>
+        <div class="col-sm-12 col-md">
+          <select id="environment" style="width: 85%;">
+            <option value="development">development</option>
+            <option value="production">production</option>
+          </select>
+        </div>
+      </div>
+      <div class="row responsive-label">
+        <div class="col-sm-12 col-md-3">
+          <label for="function-name">
+            Function
+          </label>
+        </div>
+        <div class="col-sm-12 col-md">
+          <input name="function-name" id="function-name" style="width: 85%;" required="required" />
+        </div>
+      </div>
+      <div class="row responsive-label">
+        <div class="col-sm-12 col-md-3">
+          <label for="data">
+            Data
+          </label>
+        </div>
+        <div class="col-sm-12 col-md">
+          <textarea id="data" style="width: 85%;"></textarea>
+        </div>
+      </div>
+      <input type="submit" class="primary" />
+    </form>
+  </div>
+  <div id="result-container">
+    <div id="result"></div>
+  </div>
+  <script src="./main.js"></script>
+</body>
+
+</html>
